@@ -18,36 +18,36 @@ verif_Role(R) :- rname(R), !. % Vérification des identificateurs de rôle.
 
 flatten(A,A):-cnamea(A),!.
 flatten(A,L):-cnamena(A),equiv(A,B),flatten(B,L). % si c'est non-atomique, on le transforme en atomique
-flatten(and(C,D),[L1,L2]):-flatten(C,L1),flatten(D,L2),!.
-flatten(or(C,D),[L1,L2]):-flatten(C,L1),flatten(D,L2),!.
-flatten(some(R,C),L):-verif_Role(R),flatten(C,L),!.
-flatten(all(R,C),L):-verif_Role(R),flatten(C,L),!.
-flatten(not(C),L):-flatten(C,L),!.
+flatten(and(C,D),[and, L1,L2]):-flatten(C,L1),flatten(D,L2),!.
+flatten(or(C,D),[or,L1,L2]):-flatten(C,L1),flatten(D,L2),!.
+flatten(some(R,C),[some,R,L]):-verif_Role(R),flatten(C,L),!.
+flatten(all(R,C),[all,R,L]):-verif_Role(R),flatten(C,L),!.
+flatten(not(C),[not,L]):-flatten(C,L),!.
 
 autoref(C):-flatten(C,L),my_flatten(L,L1),member(C,L1),!.
-
-
 
 
 % Création d'un Tbox
-relation(X,Y,and):-and(X,Y),!.
-relation(X,Y,or):-or(X,Y),!.
-relation(R,C,some):-some(R,C),!.
-relation(R,C,all):-all(R,C),!.
-relation(X,[],not):-not(X),!.
+prolonge(A,A):-cnamea(A),!.
+prolonge(A,L):-cnamena(A),equiv(A,B),verif_Concept(B),prolonge(B,L). % si c'est non-atomique, on le transforme en atomique
+prolonge(and(C,D),and(L1,L2)):-prolonge(C,L1),prolonge(D,L2),!.
+prolonge(or(C,D),or(L1,L2)):-prolonge(C,L1),prolonge(D,L2),!.
+prolonge(some(R,C),some(R,L)):-verif_Role(R),prolonge(C,L),!.
+prolonge(all(R,C),all(R,L)):-verif_Role(R),prolonge(C,L),!.
+prolonge(not(C),not(L)):-prolonge(C,L),!.
 
-creation_Tbox(L):- setof((CA,NF),nnf(CG,NF), equiv(CA,CG),L).
 
-% Création d'un A
+creation_Tbox(L):- setof((CA,CG), equiv(CA,CG), L).
+traitement_Tbox([],[]).
+traitement_Tbox([(CA,CG)|L],[(CA,NF)|L1]):-prolonge(CG,CG1),nnf(CG1,NF),traitement_Tbox(L,L1).
+
+% Création de Abox
 creation_Abox(L1,L2):- setof((CA,NF), inst(CA,NF),L1), setof((CA,CB,CD), instR(CA,CB,CD),L2).
-
-% Pour la Tbox
-% si c'est non-atomique, on le transforme en atomique
-transformer_concept(C,CA):- cnamena(C),equiv(C,D),verif_Concept(D),transformer_concept(D,CA).
-
-
-
-autoref(C):-flatten(C,L),my_flatten(L,L1),member(C,L1),!.
+traitement_Abox1([],[]).
+traitement_Abox1([(CA,CG)|L],[(CA,NF)|L1]):-prolonge(CG,CG1),nnf(CG1,NF),traitement_Abox1(L,L1).
+traitement_Abox2([],[]).
+traitement_Abox2([(CA,CB,CD)|L],[(CA,CB,NF)|L1]):-prolonge(CD,CD1),nnf(CG1,NF),traitement_Abox2(L,L1).
+traitement_Abox(L1,L2,LL1,LL2):-traitement_Abox1(L1,LL1),traitement_Abox2(L2,LL2).
 /*
 
 % Pour la Tbox
