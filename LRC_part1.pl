@@ -46,7 +46,7 @@ creation_Abox(L1,L2):- setof((CA,NF), inst(CA,NF),L1), setof((CA,CB,CD), instR(C
 traitement_Abox1([],[]).
 traitement_Abox1([(CA,CG)|L],[(CA,NF)|L1]):-prolonge(CG,CG1),nnf(CG1,NF),traitement_Abox1(L,L1).
 traitement_Abox2([],[]).
-traitement_Abox2([(CA,CB,CD)|L],[(CA,CB,NF)|L1]):-prolonge(CD,CD1),nnf(CG1,NF),traitement_Abox2(L,L1).
+traitement_Abox2([(CA,CB,R)|L],[(CA,CB,R)|L1]):-iname(CA),iname(CB),rname(R),instR(CA, CB, R),traitement_Abox2(L,L1).
 traitement_Abox(L1,L2,LL1,LL2):-traitement_Abox1(L1,LL1),traitement_Abox2(L2,LL2).
 /*
 
@@ -72,7 +72,11 @@ verif_AboxR([(I1, I2, R) | Q]) :- verif_InstR(I1, I2, R), verif_AboxR(Q), !.
 */
 
 
-
+premiere_etape(TboxR,AboxIR, AboxRR) :-
+    creation_Tbox(Tbox),
+    creation_Abox(AboxI,AboxR),
+    traitement_Tbox(Tbox, TboxR),
+    traitement_Abox(AboxI, AboxR, AboxIR, AboxRR).
 
 
 

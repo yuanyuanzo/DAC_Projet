@@ -1,0 +1,1 @@
+seewrite:-read([X,C]),write(X),write(C).
