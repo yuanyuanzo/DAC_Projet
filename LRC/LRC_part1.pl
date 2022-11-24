@@ -18,11 +18,11 @@ verif_Role(R) :- rname(R), !. % Vérification des identificateurs de rôle.
 
 flatten(A,A):-cnamea(A),!.
 flatten(A,L):-cnamena(A),equiv(A,B),flatten(B,L). % si c'est non-atomique, on le transforme en atomique
-flatten(and(C,D),[and, L1,L2]):-flatten(C,L1),flatten(D,L2),!.
-flatten(or(C,D),[or,L1,L2]):-flatten(C,L1),flatten(D,L2),!.
-flatten(some(R,C),[some,R,L]):-verif_Role(R),flatten(C,L),!.
-flatten(all(R,C),[all,R,L]):-verif_Role(R),flatten(C,L),!.
-flatten(not(C),[not,L]):-flatten(C,L),!.
+flatten(and(C,D),[L1,L2]):-flatten(C,L1),flatten(D,L2),!.
+flatten(or(C,D),[L1,L2]):-flatten(C,L1),flatten(D,L2),!.
+flatten(some(R,C),[R,L]):-verif_Role(R),flatten(C,L),!.
+flatten(all(R,C),[R,L]):-verif_Role(R),flatten(C,L),!.
+flatten(not(C),[L]):-flatten(C,L),!.
 
 autoref(C):-flatten(C,L),my_flatten(L,L1),member(C,L1),!.
 
