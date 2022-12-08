@@ -10,14 +10,14 @@ verif_Concept(all(R, C)) :- verif_Role(R), verif_Concept(C), !.
 
 verif_Concept(C) :- cnamea(C), !. % Vérification des concepts atomique
 verif_Concept(CG) :- cnamena(CG), !. % Vérification des concepts non atomique
-verif_Instance(I) :- iname(I), !. % Vérification des identificateurs d'instance
+verif_Instance(I) :- iname(I), !. % Vérification des identificateurs d“instance
 verif_Role(R) :- rname(R), !. % Vérification des identificateurs de rôle.
 
 % Vérification syntaxique
 % Pour autoref
 
 flatten(A,A):-cnamea(A),!.
-flatten(A,L):-cnamena(A),equiv(A,B),flatten(B,L). % si c'est non-atomique, on le transforme en atomique
+flatten(A,L):-cnamena(A),equiv(A,B),flatten(B,L). % si c”est non-atomique, on le transforme en atomique
 flatten(and(C,D),[L1,L2]):-flatten(C,L1),flatten(D,L2),!.
 flatten(or(C,D),[L1,L2]):-flatten(C,L1),flatten(D,L2),!.
 flatten(some(R,C),[R,L]):-verif_Role(R),flatten(C,L),!.
@@ -27,9 +27,9 @@ flatten(not(C),[L]):-flatten(C,L),!.
 autoref(C):-flatten(C,L),my_flatten(L,L1),member(C,L1),!.
 
 
-% Création d'un Tbox
+% Création d“un Tbox
 prolonge(A,A):-cnamea(A),!.
-prolonge(A,L):-cnamena(A),equiv(A,B),verif_Concept(B),prolonge(B,L). % si c'est non-atomique, on le transforme en atomique
+prolonge(A,L):-cnamena(A),equiv(A,B),verif_Concept(B),prolonge(B,L). % si c”est non-atomique, on le transforme en atomique
 prolonge(and(C,D),and(L1,L2)):-prolonge(C,L1),prolonge(D,L2),!.
 prolonge(or(C,D),or(L1,L2)):-prolonge(C,L1),prolonge(D,L2),!.
 prolonge(some(R,C),some(R,L)):-verif_Role(R),prolonge(C,L),!.
@@ -76,7 +76,13 @@ premiere_etape(TboxR,AboxIR, AboxRR) :-
     creation_Tbox(Tbox),
     creation_Abox(AboxI,AboxR),
     traitement_Tbox(Tbox, TboxR),
-    traitement_Abox(AboxI, AboxR, AboxIR, AboxRR).
+    traitement_Abox(AboxI, AboxR, AboxIR, AboxRR),
+    write('Tbox : '),nl,
+    write(TboxR),nl,
+    write('AboxIR : '),nl,
+    write(AboxIR),nl,
+    write('AboxIRR'),nl,
+    write(AboxRR),nl,nl.
 
 
 

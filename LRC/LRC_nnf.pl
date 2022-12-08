@@ -18,6 +18,7 @@ concat([X|Y],L1,[X|L2]) :- concat(Y,L1,L2).
 enleve(X,[X|L],L) :-!.
 enleve(X,[Y|L],[Y|L2]) :- enleve(X,L,L2). 
 
+
 genere(Nom) :- compteur(V),nombre(V,L1),
                 concat([105,110,115,116],L1,L2),
                 V1 is V+1,
@@ -25,7 +26,9 @@ genere(Nom) :- compteur(V),nombre(V,L1),
                 retract(compteur(V)),
                 dynamic(compteur/1),
                 assert(compteur(V1)),nl,nl,nl,
-                name(Nom,L2). nombre(0,[]).
+                name(Nom,L2),!. 
+
+nombre(0,[]).
             
 nombre(X,L1) :-
                  R is (X mod 10),
@@ -49,3 +52,4 @@ chiffre_car(9,'9').
 my_flatten(X,[X]) :- \+is_list(X),!. 
 my_flatten([],[]).
 my_flatten([X|Xs],Zs) :- my_flatten(X,Y), my_flatten(Xs,Ys), append(Y,Ys,Zs).
+
