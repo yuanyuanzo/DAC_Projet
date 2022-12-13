@@ -30,7 +30,7 @@ ajouter1(I,C,Abi,Abi1,Tbox):- prolonge_A_Tbox(C,Tbox,Abi,CC),nnf(not(CC),NF),my_
 
 %Pour Type2
 % Trouver le formule a demontrer
-acquisition_prop_type2(Abi,Abi11,Tbox) :-write('Entrer duex concepts en [C1,C2].'),nl,read([C1,C2]),
+acquisition_prop_type2(Abi,Abi11,Tbox) :-write('Entrer deux concepts en [C1,C2].'),nl,read([C1,C2]),
                                         ajouter2(C1,C2,Abi,Abi1,Tbox),my_flatten(Abi1,Abi11).
 
 %Ajouter le formule traite dans Abox etendue

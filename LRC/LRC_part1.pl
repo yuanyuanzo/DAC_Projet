@@ -86,10 +86,22 @@ traitement_Abox(L1,L2,LL1,LL2):-traitement_Abox1(L1,LL1),traitement_Abox2(L2,LL2
 %% Tous ce qu''on a fait jusqu''à maintenant
 
 premiere_etape(TboxR,AboxIR, AboxRR) :-
+    write('Création de la TBox ...'), nl,
     creation_Tbox(Tbox),
+    write('Création de la TBox réussi'), nl,
+
+    write('Création des ABox ...'), nl,
     creation_Abox(AboxI,AboxR),
+    write('Création des ABox réussi'), nl,
+    
+    write('Traitement de la TBox ...'), nl,
     traitement_Tbox(Tbox, TboxR),
+    write('Traitement de la TBox réussi'), nl,
+
+    write('Traitement des ABox ...'), nl,
     traitement_Abox(AboxI, AboxR, AboxIR, AboxRR),
+    write('Traitement des ABox réussi'), nl.
+    
     write('Tbox : '),nl,
     write(TboxR),nl,
     write('AboxIR : '),nl,
