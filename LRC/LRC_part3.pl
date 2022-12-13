@@ -50,6 +50,9 @@ tranformation_or(Lie,Lpt,Li,Lu,Ls,Abe,[Abe21,Abe22]):- enleve((I,or(C1,C2)),Lu,L
                                         concat([(I,C1)],Abe2,Abe21),
                                         concat([(I,C2)],Abe2,Abe22),!.
 
+
+
+% identifier les clash
 test_collision(Abe):- member((I,C),Abe),member((I, not(C)),Abe),
                      write('collision between : '),!,
                      print_concepte((I,C)),!,
@@ -57,6 +60,9 @@ test_collision(Abe):- member((I,C),Abe),member((I, not(C)),Abe),
                      print_concepte((I,not(C))),!,nl,nl.
 
 
+%evolution
+evolue(Abe,Lie1, Lpt1, Li1, Lu1, Ls1):- seperate_ABR(Abe,Abi,_),
+                                    tri_Abox(Abi,Lie1,Lpt1,Li1,Lu1,Ls1).
 
 %%%%%%%%%%NON
 
@@ -66,16 +72,14 @@ resolution(_,_,_,_,_,Abe):- test_collision(Abe),
 
 %FAIL
 resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
-                                    seperate_ABR(Abe,Abi,_),
-                                    tri_Abox(Abi,Lie1,Lpt1,Li1,Lu1,_),
+                                    evolue(Abe,Lie1, Lpt1, Li1, Lu1, _),
                                     Lie1=[],Lpt1=[],Li1=[],Lu1=[],
-                                    write('Fail to match any rule'),nl,
+                                    write('Fail to match any rule, ce proposition n est pas valide'),nl,
                                     print_Abox(Abe),nl.
 
 %%%%%%%%%% some
 resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
-                                    seperate_ABR(Abe,Abi,_),
-                                    tri_Abox(Abi,Lie1,Lpt1,Li1,Lu1,Ls1),
+                                    evolue(Abe,Lie1, Lpt1, Li1, Lu1, Ls1),
                                     Lie1\=[],
                                     complete_some(Lie1,Lpt1,Li1,Lu1,Ls1,Abe,Abe2),
                                     nl,write('Some'),nl,nl,
@@ -84,8 +88,7 @@ resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
                                     resolution(_,_,_,_,_,Abe2).
 
 resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
-                                    seperate_ABR(Abe,Abi,_),
-                                    tri_Abox(Abi,Lie1,Lpt1,Li1,Lu1,Ls1),
+                                    evolue(Abe,Lie1, Lpt1, Li1, Lu1, Ls1),
                                     Lie1\=[],
                                     complete_some(Lie1,Lpt1,Li1,Lu1,Ls1,Abe,Abe2),
                                     test_collision(Abe2),nl,
@@ -95,8 +98,7 @@ resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
 
 %ALL
 resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
-                                    seperate_ABR(Abe,Abi,_),
-                                    tri_Abox(Abi,Lie1,Lpt1,Li1,Lu1,Ls1),
+                                    evolue(Abe,Lie1, Lpt1, Li1, Lu1, Ls1),
                                     Lpt1\=[],
                                     deduction_all(Lie1,Lpt1,Li1,Lu1,Ls1,Abe,Abe2),
                                     nl,nl,write('All'),nl,nl,
@@ -105,8 +107,7 @@ resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
                                     resolution(_,_,_,_,_,Abe2).
 
 resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
-                                    seperate_ABR(Abe,Abi,_),
-                                    tri_Abox(Abi,Lie1,Lpt1,Li1,Lu1,Ls1),
+                                    evolue(Abe,Lie1, Lpt1, Li1, Lu1, Ls1),
                                     Lpt1\=[],
                                     deduction_all(Lie1,Lpt1,Li1,Lu1,Ls1,Abe,Abe2),
                                     test_collision(Abe2),
@@ -116,8 +117,7 @@ resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
 
 %AND
 resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
-                                    seperate_ABR(Abe,Abi,_),
-                                    tri_Abox(Abi,Lie1,Lpt1,Li1,Lu1,Ls1),
+                                    evolue(Abe,Lie1, Lpt1, Li1, Lu1, Ls1),
                                     Li1\=[],
                                     tansformation_and(Lie1,Lpt1,Li1,Lu1,Ls1,Abe,Abe2),
                                     nl,nl,write('AND'),nl,nl,
@@ -126,8 +126,7 @@ resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
                                     resolution(_,_,_,_,_,Abe2).
 
 resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
-                                    seperate_ABR(Abe,Abi,_),
-                                    tri_Abox(Abi,Lie1,Lpt1,Li1,Lu1,Ls1),
+                                    evolue(Abe,Lie1, Lpt1, Li1, Lu1, Ls1),
                                     Li1\=[],
                                     tansformation_and(Lie1,Lpt1,Li1,Lu1,Ls1,Abe,Abe2),
                                     test_collision(Abe2),
@@ -136,8 +135,7 @@ resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
 
 %OR
 resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
-                                    seperate_ABR(Abe,Abi,_),
-                                    tri_Abox(Abi,Lie1,Lpt1,Li1,Lu1,Ls1),
+                                    evolue(Abe,Lie1, Lpt1, Li1, Lu1, Ls1),
                                     Lu1\=[],
                                     tranformation_or(Lie1,Lpt1,Li1,Lu1,Ls1,Abe,[Abe21,Abe22]),
                                     not(test_collision(Abe21)),
@@ -154,12 +152,12 @@ resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
   
 
 resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
-                                    seperate_ABR(Abe,Abi,_),
-                                    tri_Abox(Abi,Lie1,Lpt1,Li1,Lu1,Ls1),
+                                    evolue(Abe,Lie1, Lpt1, Li1, Lu1, Ls1),
                                     Lu1\=[],
                                     tranformation_or(Lie1,Lpt1,Li1,Lu1,Ls1,Abe,[Abe21,Abe22]),
                                     test_collision(Abe21),
                                     nl,write('branch 1 collided'),nl,nl,nl,
+                                    print_Abox(Abe21),nl,nl,
                                     not(test_collision(Abe22)),
                                     write('branch 2'),nl,
                                     print_Abox(Abe22),nl,nl,
@@ -168,8 +166,7 @@ resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
 
  
 resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
-                                    seperate_ABR(Abe,Abi,_),
-                                    tri_Abox(Abi,Lie1,Lpt1,Li1,Lu1,Ls1),
+                                    evolue(Abe,Lie1, Lpt1, Li1, Lu1, Ls1),
                                     Lu1\=[],
                                     tranformation_or(Lie1,Lpt1,Li1,Lu1,Ls1,Abe,[Abe21,Abe22]),
                                     test_collision(Abe21),
