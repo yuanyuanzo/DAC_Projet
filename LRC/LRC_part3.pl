@@ -1,5 +1,4 @@
 % Donne par l"enonce"
-compteur(2).
 troisieme_etape(Abi,Abr) :- nl,nl,
                                 write('Abox ins = '),write(Abi),nl,nl,
                                 write('Abox relation = '),write(Abr),nl,nl,
@@ -51,7 +50,11 @@ tranformation_or(Lie,Lpt,Li,Lu,Ls,Abe,[Abe21,Abe22]):- enleve((I,or(C1,C2)),Lu,L
                                         concat([(I,C1)],Abe2,Abe21),
                                         concat([(I,C2)],Abe2,Abe22),!.
 
-test_collision(Abe):- member((I,C),Abe),member((I, not(C)),Abe).
+test_collision(Abe):- member((I,C),Abe),member((I, not(C)),Abe),
+                     write('collision between : '),!,
+                     print_concepte((I,C)),!,
+                     write(' and '),!,
+                     print_concepte((I,not(C))),!,nl,nl.
 
 
 
@@ -59,30 +62,24 @@ test_collision(Abe):- member((I,C),Abe),member((I, not(C)),Abe).
 
 resolution(_,_,_,_,_,Abe):- test_collision(Abe),
                                     write('Collision'),nl,
-                                    write(Abe),nl,!.
+                                    print_Abox(Abe),nl,!.
 
 %FAIL
 resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
                                     seperate_ABR(Abe,Abi,_),
-                                    tri_Abox(Abi,Lie1,Lpt1,Li1,Lu1,Ls1),
+                                    tri_Abox(Abi,Lie1,Lpt1,Li1,Lu1,_),
                                     Lie1=[],Lpt1=[],Li1=[],Lu1=[],
                                     write('Fail to match any rule'),nl,
-                                    write(Abe),nl.
+                                    print_Abox(Abe),nl.
 
 %%%%%%%%%% some
 resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
                                     seperate_ABR(Abe,Abi,_),
                                     tri_Abox(Abi,Lie1,Lpt1,Li1,Lu1,Ls1),
                                     Lie1\=[],
-                                    write('Lie1!=[]'),nl,
-                                    write('Abi'),nl,
-                                    write(Abi),nl,
-                                    write('Abe'),nl,
-                                    write(Abe),nl,
                                     complete_some(Lie1,Lpt1,Li1,Lu1,Ls1,Abe,Abe2),
                                     nl,write('Some'),nl,nl,
-                                    write('Abe2'),nl,
-                                    write(Abe2),nl,nl,
+                                    affiche_evolution_Abox([],[],[],[],[],Abe,Lie1,Lpt1,Li1,Lu1,Ls1,Abe2),nl,nl,
                                     not(test_collision(Abe2)),
                                     resolution(_,_,_,_,_,Abe2).
 
@@ -90,16 +87,9 @@ resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
                                     seperate_ABR(Abe,Abi,_),
                                     tri_Abox(Abi,Lie1,Lpt1,Li1,Lu1,Ls1),
                                     Lie1\=[],
-                                    write('Lie1!=[]'),nl,
-                                    write('Abi'),nl,
-                                    write(Abi),nl,
-                                    write('Abe'),nl,
-                                    write(Abe),
                                     complete_some(Lie1,Lpt1,Li1,Lu1,Ls1,Abe,Abe2),
-                                    nl,nl,write('Some'),nl,nl,
-                                    write('Abe2'),nl,
-                                    write(Abe2),nl,nl,nl,
-                                    test_collision(Abe2).
+                                    test_collision(Abe2),nl,
+                                    write('Collision exist here!!'),nl.
 
 
 
@@ -108,15 +98,9 @@ resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
                                     seperate_ABR(Abe,Abi,_),
                                     tri_Abox(Abi,Lie1,Lpt1,Li1,Lu1,Ls1),
                                     Lpt1\=[],
-                                    write('Lpt1!=[]'),nl,
-                                    write('Abi'),nl,
-                                    write(Abi),nl,
-                                    write('Abe'),nl,
-                                    write(Abe),nl,
                                     deduction_all(Lie1,Lpt1,Li1,Lu1,Ls1,Abe,Abe2),
                                     nl,nl,write('All'),nl,nl,
-                                    write('Abe2'),nl,
-                                    write(Abe2),nl,nl,nl,
+                                    affiche_evolution_Abox([],[],[],[],[],Abe,Lie1,Lpt1,Li1,Lu1,Ls1,Abe2),nl,nl,
                                     not(test_collision(Abe2)),
                                     resolution(_,_,_,_,_,Abe2).
 
@@ -124,16 +108,9 @@ resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
                                     seperate_ABR(Abe,Abi,_),
                                     tri_Abox(Abi,Lie1,Lpt1,Li1,Lu1,Ls1),
                                     Lpt1\=[],
-                                    write('Lpt1!=[]'),nl,
-                                    write('Abi'),nl,
-                                    write(Abi),nl,
-                                    write('Abe'),nl,
-                                    write(Abe),nl,nl,nl,
                                     deduction_all(Lie1,Lpt1,Li1,Lu1,Ls1,Abe,Abe2),
-                                    write('All'),nl,nl,
-                                    write('Abe2'),nl,
-                                    write(Abe2),nl,nl,nl,
-                                    test_collision(Abe2).
+                                    test_collision(Abe2),
+                                    write('Collision exist here!!'),nl.
 
                                     
 
@@ -142,15 +119,9 @@ resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
                                     seperate_ABR(Abe,Abi,_),
                                     tri_Abox(Abi,Lie1,Lpt1,Li1,Lu1,Ls1),
                                     Li1\=[],
-                                    write('Li1!=[]'),nl,
-                                    write('Abi'),nl,
-                                    write(Abi),nl,
-                                    write('Abe'),nl,
-                                    write(Abe),nl,
                                     tansformation_and(Lie1,Lpt1,Li1,Lu1,Ls1,Abe,Abe2),
                                     nl,nl,write('AND'),nl,nl,
-                                    write('Abe2'),nl,
-                                    write(Abe2),nl,nl,nl,
+                                    affiche_evolution_Abox([],[],[],[],[],Abe,Lie1,Lpt1,Li1,Lu1,Ls1,Abe2),nl,nl,
                                     not(test_collision(Abe2)),
                                     resolution(_,_,_,_,_,Abe2).
 
@@ -159,56 +130,91 @@ resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
                                     tri_Abox(Abi,Lie1,Lpt1,Li1,Lu1,Ls1),
                                     Li1\=[],
                                     tansformation_and(Lie1,Lpt1,Li1,Lu1,Ls1,Abe,Abe2),
-                                    test_collision(Abe2).
+                                    test_collision(Abe2),
+                                    write('Collision exist here!!'),nl.
 
 
 %OR
 resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
-                                    seperate_ABR(Abe,Abi,_),!,
-                                    tri_Abox(Abi,Lie1,Lpt1,Li1,Lu1,Ls1),
-                                    Lu1\=[],
-                                    tranformation_or(Lie1,Lpt1,Li1,Lu1,Ls1,Abe,[Abe21,Abe22]),
-                                    test_collision(Abe21),
-                                    not(test_collision(Abe22)),
-                                    nl,nl,write('previous Abe'),nl,nl,
-                                    write(Abe),nl,nl,
-                                    nl,nl,write('Or'),nl,nl,
-                                    write('branch 2'),nl,
-                                    write(Abe22),nl,nl,nl,
-                                    resolution(_,_,_,_,_,Abe22). 
-                                   
-resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
-                                    seperate_ABR(Abe,Abi,_),!,
+                                    seperate_ABR(Abe,Abi,_),
                                     tri_Abox(Abi,Lie1,Lpt1,Li1,Lu1,Ls1),
                                     Lu1\=[],
                                     tranformation_or(Lie1,Lpt1,Li1,Lu1,Ls1,Abe,[Abe21,Abe22]),
                                     not(test_collision(Abe21)),
-                                    nl,nl,write('previous Abe'),nl,nl,
-                                    write(Abe),nl,nl,
+                                    write('previous Abe'),nl,nl,
+                                    print_Abox(Abe),nl,nl,
                                     nl,nl,write('Or'),nl,nl,
                                     write('branch 1'),nl,
-                                    write(Abe21),nl,nl,nl,
-                                    resolution(_,_,_,_,_,Abe21).    
-                                 
+                                    print_Abox(Abe21),nl,nl,
+                                    resolution(_,_,_,_,_,Abe21),
+                                    not(test_collision(Abe22)),
+                                    nl,nl,nl,write('Go back to branch 2'),nl,
+                                    print_Abox(Abe22),nl,nl,
+                                    resolution(_,_,_,_,_,Abe22).
+  
 
 resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
-                                    seperate_ABR(Abe,Abi,_),!,
+                                    seperate_ABR(Abe,Abi,_),
                                     tri_Abox(Abi,Lie1,Lpt1,Li1,Lu1,Ls1),
                                     Lu1\=[],
-                                    write('Lu1!=[]'),nl,
-                                    write('Abi'),nl,
-                                    write(Abi),nl,
-                                    write('Abe'),nl,
-                                    write(Abe),nl,
+                                    tranformation_or(Lie1,Lpt1,Li1,Lu1,Ls1,Abe,[Abe21,Abe22]),
+                                    test_collision(Abe21),
+                                    nl,write('branch 1 collided'),nl,nl,nl,
+                                    not(test_collision(Abe22)),
+                                    write('branch 2'),nl,
+                                    print_Abox(Abe22),nl,nl,
+                                    resolution(_,_,_,_,_,Abe22). 
+                                   
+
+ 
+resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
+                                    seperate_ABR(Abe,Abi,_),
+                                    tri_Abox(Abi,Lie1,Lpt1,Li1,Lu1,Ls1),
+                                    Lu1\=[],
                                     tranformation_or(Lie1,Lpt1,Li1,Lu1,Ls1,Abe,[Abe21,Abe22]),
                                     test_collision(Abe21),
                                     test_collision(Abe22),
-                                    write('branch 2 collided'),nl,
+                                    write('branch 1 and 2 collided'),nl,
                                     write(Abe22),nl,nl,nl.  
 
 
 
+% print the evolution
+print_concepte(and(C1,C2)):- 
+                           write('('),
+                           print_concepte(C1),
+                           write(')'),
+                           write('  ⊓  '),
+                           write('('),
+                           print_concepte(C2),
+                           write(')').
 
-                                    
+print_concepte(or(C1,C2)):- write('('),
+                           print_concepte(C1),
+                           write(')'),
+                           write('  ⊔  '),
+                           write('('),
+                           print_concepte(C2),
+                           write(')').
+
+print_concepte(not(C)):- write('¬ '),print_concepte(C).
+
+print_concepte(C):- cnamea(C),write(C).
+print_concepte(R):- role(R),write(R).
+print_concepte((I1,I2,R)):-write('〈'),write(I1),write(','),write(I2),write('〉'),write(' : '),write(R),nl,!.
+print_concepte((I,C)):- write(I),write(' : '),print_concepte(C),nl,!.
+print_concepte(some(R,C)):- write('∃ '),write(R),write(': '),print_concepte(C).
+print_concepte(all(R,C)):- write('∀ '),write(R),write(': '),print_concepte(C).
 
 
+print_Abox([]).
+print_Abox([A|Abe]):-
+                    print_concepte(A),
+                    print_Abox(Abe).
+
+
+affiche_evolution_Abox(_,_,_,_,_,Abe1,_,_,_,_,_,Abe2) :- 
+                  write('Evolution from Abox1'),nl,
+                    print_Abox(Abe1),
+                    nl,nl,write('To Abox2'),nl,
+                    print_Abox(Abe2),nl,nl,nl.

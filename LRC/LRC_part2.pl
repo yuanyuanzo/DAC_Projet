@@ -1,5 +1,6 @@
-% Donne par l"enonce"
+% Donne par l enonce
 compteur(1).
+
 deuxieme_etape(Abi,Abi1,Tbox) :-
 saisie_et_traitement_prop_a_demontrer(Abi,Abi1,Tbox).
 
@@ -16,20 +17,20 @@ saisie_et_traitement_prop_a_demontrer(Abi,Abi1,Tbox) :-
     
 suite(1,Abi,Abi1,Tbox) :-    acquisition_prop_type1(Abi,Abi1,Tbox),!.
 suite(2,Abi,Abi1,Tbox) :-    acquisition_prop_type2(Abi,Abi1,Tbox),!.
-% suite(R,Abi,Abi1,Tbox) :-    nl,write('Cette reponse est incorrecte.'),nl,
-%                             saisie_et_traitement_prop_a_demontrer(Abi,Abi1,Tbox).
+suite(_,Abi,Abi1,Tbox) :-    nl,write('Cette reponse est incorrecte.'),nl,
+                             saisie_et_traitement_prop_a_demontrer(Abi,Abi1,Tbox).
 
 %Pour Type1
 % Trouver le formule a demontrer
 acquisition_prop_type1(Abi,Abi11,Tbox) :-write('Entrer le concept et l"instance en [I,C].'),nl,read([I,C]),
-                                        ajouter1(I,C,Abi,Abi1,Tbox),my_flatten(Abi1,Abi11).
+                                        ajouter1(I,C,Abi,Abi1,Tbox),my_flatten(Abi1,Abi11),!.
 
 %Ajouter le formule traite dans Abox etendue
 ajouter1(I,C,Abi,Abi1,Tbox):- prolonge_A_Tbox(C,Tbox,Abi,CC),nnf(not(CC),NF),my_flatten([Abi,(I,NF)],Abi1).
 
 %Pour Type2
 % Trouver le formule a demontrer
-acquisition_prop_type2(Abi,Abi1,Tbox) :-write('Entrer duex concepts en [C1,C2].'),nl,read([C1,C2]),
+acquisition_prop_type2(Abi,Abi11,Tbox) :-write('Entrer duex concepts en [C1,C2].'),nl,read([C1,C2]),
                                         ajouter2(C1,C2,Abi,Abi1,Tbox),my_flatten(Abi1,Abi11).
 
 %Ajouter le formule traite dans Abox etendue
@@ -46,8 +47,8 @@ ajouter2(C1,C2,Abi,Abi1,Tbox):- genere(A),prolonge_A_Tbox(C1,Tbox,Abi,CC1),
 % Pronlonger un concept base de Tbox et Tbox( presque la meme que dans LRC_part1.pl)
 prolonge_A_Tbox(C,Tbox,Abox,C):- member((_,C),Abox),
                                 not(member((C,_),Tbox)). % si c”est atomique, on ne fait rien
-prolonge_A_Tbox(anything,Tbox,Abox,anything):-!.
-prolonge_A_Tbox(nothing,Tbox,Abox,nothing):-!.
+prolonge_A_Tbox(anything,_,_,anything):-!.
+prolonge_A_Tbox(nothing,_,_,nothing):-!.
 prolonge_A_Tbox(C,Tbox,Abox,L):- not(member((_,C),Abox)),member((C,CC),Tbox),
                                 prolonge_A_Tbox(CC,Tbox,Abox,L). % si c”est non-atomique, on le transforme en atomique
 prolonge_A_Tbox(and(C,D),Tbox,Abox,and(L1,L2)):-prolonge_A_Tbox(C,Tbox,Abox,L1),
