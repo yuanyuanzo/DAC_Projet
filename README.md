@@ -15,7 +15,11 @@ Master informatique - Sorbonne Université
 
 ## Test pour proposition : **michelAnge: and(sculpteur,auteur)**
 
-Les mots en gras indiquent ce qu'il faut saisir.
+#### Attention: Il faut mettre un espace entre deux élements entre les crochets, mais il ne faut pas en avoir dans les parantèse!
+Il suffit de copier-coller les mots entre les étoiles .
+eg. pour `**[michelAnge, and(sculpteur,auteur)].**` on tape juste  `[michelAnge, and(sculpteur,auteur)].`
+
+Les mots en entre les  indiquent ce qu'il faut saisir.
 
 ```
 (base) luoshuyuan@luoshuyuandeMacBook-Pro LRC % **swipl**
@@ -212,7 +216,7 @@ true .
 ## Test pour proposition : **$auteur  ⊓  editeur \sqsubseteq \bot$**
 #### Attention: Il faut mettre un espace entre deux élements entre les crochets, mais il ne faut pas en avoir dans les parantèse!
 Il suffit de copier-coller les mots entre les étoiles .
-eg. pour `**[auteur, editeur]..**` on tape juste [auteur, editeur].
+eg. pour `**[auteur, editeur].**` on tape juste `[auteur, editeur].`
 ```
 Entrez   le   numero   du   type   de   proposition   que   vous   voulez demontrer :
 1 Une instance donnee appartient a un concept donne.
@@ -518,7 +522,7 @@ true .
 
 ## Test michelAnge: not(editeur)
 Il suffit de copier-coller les mots entre les étoiles .
-eg. pour `**[michelAnge, not(editeur)].**` on tape juste [michelAnge, not(editeur)].
+eg. pour `**[michelAnge, not(editeur)].**` on tape juste `[michelAnge, not(editeur)].`
 ```
 Entrez   le   numero   du   type   de   proposition   que   vous   voulez demontrer :
 1 Une instance donnee appartient a un concept donne.
