@@ -100,7 +100,7 @@ premiere_etape(TboxR,AboxIR, AboxRR) :-
 
     write('Traitement des ABox ...'), nl,
     traitement_Abox(AboxI, AboxR, AboxIR, AboxRR),
-    write('Traitement des ABox réussi'), nl.
+    write('Traitement des ABox réussi'), nl,
     
     write('Tbox : '),nl,
     write(TboxR),nl,
