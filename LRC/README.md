@@ -15,10 +15,10 @@ Master informatique - Sorbonne Université
 
 ## Test pour proposition : **michelAnge: and(sculpteur,auteur)**
 #### Attention: Il faut mettre un espace entre deux élements entre les crochets, mais il ne faut pas en avoir dans les parantèse!
-Il suffit de copier-coller ce que dans readme.
-eg. [michelAnge, and(sculpteur,auteur)]
+Il suffit de copier-coller les mots entre les étoiles .
+eg. pour `**[michelAnge, and(sculpteur,auteur)].**` on tape juste [michelAnge, and(sculpteur,auteur)]
 
-Les mots entre les étoiles indiquent ce qu'il faut saisir.
+
 
 ```
 (base) luoshuyuan@luoshuyuandeMacBook-Pro LRC % **swipl**
@@ -212,18 +212,17 @@ true .
 
 ## Test pour proposition : **$auteur  ⊓  editeur \sqsubseteq \bot$**
 #### Attention: Il faut mettre un espace entre deux élements entre les crochets, mais il ne faut pas en avoir dans les parantèse!
-Il suffit de copier-coller ce que dans readme.
-eg.[auteur, editeur].
+Il suffit de copier-coller les mots entre les étoiles .
+eg. pour `**[auteur, editeur]..**` on tape juste [auteur, editeur].
 ```
 Entrez   le   numero   du   type   de   proposition   que   vous   voulez demontrer :
 1 Une instance donnee appartient a un concept donne.
 2 Deux concepts n"ont pas d"elements en commun(ils ont une intersection vide).
-|: 2.
+|: **2.**
 Entrer deux concepts en [C1,C2].
-|: [auteur, editeur].
-
-
-
+|: **[auteur, editeur].**
+```
+```
 2e etape
 Abox etendue: 
 [(david,sculpture),(joconde,objet),(michelAnge,personne),(sonnets,livre),(vinci,personne),(inst1,and(and(personne,some(aEcrit,livre)),and(personne,and(all(aEcrit,not(livre)),some(aEdite,livre)))))]
@@ -513,3 +512,7 @@ Collision exist here!!
 Youpiiiiii, on a demontre la proposition initiale !!!
 true .
 ```
+
+## Arbre construit selon l'affichage
+
+![demon1](./demon/demon1.png)
