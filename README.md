@@ -40,11 +40,13 @@ Entrez  le  numero  du  type  de  proposition  que  vous  voulez demontrer :1 Un
 Entrer le concept et l"instance en [I,C].
 
 |: **[michelAnge, and(sculpteur,auteur)].**
-
+```
+```
 Abox ins = [(david,sculpture),(joconde,objet),(michelAnge,personne),(sonnets,livre),(vinci,personne),(michelAnge,or(or(not(personne),all(aCree,not(sculpture))),or(not(personne),all(aEcrit,not(livre)))))]
 Abox relation = [(michelAnge,david,aCree),(michelAnge,sonnets,aEcrit),(vinci,joconde,aCree)]
 Abe = [(michelAnge,david,aCree),(michelAnge,sonnets,aEcrit),(vinci,joconde,aCree),(david,sculpture),(joconde,objet),(michelAnge,personne),(sonnets,livre),(vinci,personne),(michelAnge,or(or(not(personne),all(aCree,not(sculpture))),or(not(personne),all(aEcrit,not(livre)))))]
-
+```
+```
 previous Abe
 〈michelAnge,david〉 : aCree
 〈michelAnge,sonnets〉 : aEcrit
@@ -55,9 +57,9 @@ michelAnge : personne
 sonnets : livre
 vinci : personne
 michelAnge : ((¬ personne) ⊔ (∀ aCree: ¬ sculpture)) ⊔ ((¬ personne) ⊔ (∀ aEcrit: ¬ livre))
+```
 
-
-
+```
 Or
 branch 1
 michelAnge : (¬ personne) ⊔ (∀ aCree: ¬ sculpture)〈michelAnge,david〉 : aCree
@@ -207,3 +209,481 @@ true .
 
 ![demon_00](./LRC/demon/demon_00.png)
 
+## Test pour proposition : **$auteur  ⊓  editeur \sqsubseteq \bot$**
+#### Attention: Il faut mettre un espace entre deux élements entre les crochets, mais il ne faut pas en avoir dans les parantèse!
+Il suffit de copier-coller les mots entre les étoiles .
+eg. pour `**[auteur, editeur]..**` on tape juste [auteur, editeur].
+```
+Entrez   le   numero   du   type   de   proposition   que   vous   voulez demontrer :
+1 Une instance donnee appartient a un concept donne.
+2 Deux concepts n"ont pas d"elements en commun(ils ont une intersection vide).
+|: **2.**
+Entrer deux concepts en [C1,C2].
+|: **[auteur, editeur].**
+```
+```
+2e etape
+Abox etendue: 
+[(david,sculpture),(joconde,objet),(michelAnge,personne),(sonnets,livre),(vinci,personne),(inst1,and(and(personne,some(aEcrit,livre)),and(personne,and(all(aEcrit,not(livre)),some(aEdite,livre)))))]
+
+Abox ins = [(david,sculpture),(joconde,objet),(michelAnge,personne),(sonnets,livre),(vinci,personne),(inst1,and(and(personne,some(aEcrit,livre)),and(personne,and(all(aEcrit,not(livre)),some(aEdite,livre)))))]
+
+Abox relation = [(michelAnge,david,aCree),(michelAnge,sonnets,aEcrit),(vinci,joconde,aCree)]
+
+Abe = [(michelAnge,david,aCree),(michelAnge,sonnets,aEcrit),(vinci,joconde,aCree),(david,sculpture),(joconde,objet),(michelAnge,personne),(sonnets,livre),(vinci,personne),(inst1,and(and(personne,some(aEcrit,livre)),and(personne,and(all(aEcrit,not(livre)),some(aEdite,livre)))))]
+
+```
+```
+AND
+
+Evolution from Abox1
+〈michelAnge,david〉 : aCree
+〈michelAnge,sonnets〉 : aEcrit
+〈vinci,joconde〉 : aCree
+david : sculpture
+joconde : objet
+michelAnge : personne
+sonnets : livre
+vinci : personne
+inst1 : ((personne)  ⊓  (∃ aEcrit: livre))  ⊓  ((personne)  ⊓  ((∀ aEcrit: ¬ livre)  ⊓  (∃ aEdite: livre)))
+
+
+To Abox2
+inst1 : (personne)  ⊓  (∃ aEcrit: livre)
+inst1 : (personne)  ⊓  ((∀ aEcrit: ¬ livre)  ⊓  (∃ aEdite: livre))
+〈michelAnge,david〉 : aCree
+〈michelAnge,sonnets〉 : aEcrit
+〈vinci,joconde〉 : aCree
+david : sculpture
+joconde : objet
+michelAnge : personne
+sonnets : livre
+vinci : personne
+```
+
+```
+
+AND
+
+Evolution from Abox1
+inst1 : (personne)  ⊓  (∃ aEcrit: livre)
+inst1 : (personne)  ⊓  ((∀ aEcrit: ¬ livre)  ⊓  (∃ aEdite: livre))
+〈michelAnge,david〉 : aCree
+〈michelAnge,sonnets〉 : aEcrit
+〈vinci,joconde〉 : aCree
+david : sculpture
+joconde : objet
+michelAnge : personne
+sonnets : livre
+vinci : personne
+
+
+To Abox2
+inst1 : personne
+inst1 : ∃ aEcrit: livre
+inst1 : (personne)  ⊓  ((∀ aEcrit: ¬ livre)  ⊓  (∃ aEdite: livre))
+〈michelAnge,david〉 : aCree
+〈michelAnge,sonnets〉 : aEcrit
+〈vinci,joconde〉 : aCree
+david : sculpture
+joconde : objet
+michelAnge : personne
+sonnets : livre
+vinci : personne
+```
+
+
+
+
+
+
+
+```
+Some
+
+Evolution from Abox1
+inst1 : personne
+inst1 : ∃ aEcrit: livre
+inst1 : (personne)  ⊓  ((∀ aEcrit: ¬ livre)  ⊓  (∃ aEdite: livre))
+〈michelAnge,david〉 : aCree
+〈michelAnge,sonnets〉 : aEcrit
+〈vinci,joconde〉 : aCree
+david : sculpture
+joconde : objet
+michelAnge : personne
+sonnets : livre
+vinci : personne
+
+
+To Abox2
+inst2 : livre
+〈inst1,inst2〉 : aEcrit
+inst1 : personne
+inst1 : (personne)  ⊓  ((∀ aEcrit: ¬ livre)  ⊓  (∃ aEdite: livre))
+〈michelAnge,david〉 : aCree
+〈michelAnge,sonnets〉 : aEcrit
+〈vinci,joconde〉 : aCree
+david : sculpture
+joconde : objet
+michelAnge : personne
+sonnets : livre
+vinci : personne
+```
+
+
+
+
+
+```
+AND
+
+Evolution from Abox1
+inst2 : livre
+〈inst1,inst2〉 : aEcrit
+inst1 : personne
+inst1 : (personne)  ⊓  ((∀ aEcrit: ¬ livre)  ⊓  (∃ aEdite: livre))
+〈michelAnge,david〉 : aCree
+〈michelAnge,sonnets〉 : aEcrit
+〈vinci,joconde〉 : aCree
+david : sculpture
+joconde : objet
+michelAnge : personne
+sonnets : livre
+vinci : personne
+
+
+To Abox2
+inst1 : personne
+inst1 : (∀ aEcrit: ¬ livre)  ⊓  (∃ aEdite: livre)
+inst2 : livre
+〈inst1,inst2〉 : aEcrit
+inst1 : personne
+〈michelAnge,david〉 : aCree
+〈michelAnge,sonnets〉 : aEcrit
+〈vinci,joconde〉 : aCree
+david : sculpture
+joconde : objet
+michelAnge : personne
+sonnets : livre
+vinci : personne
+```
+
+
+
+
+
+```
+AND
+
+Evolution from Abox1
+inst1 : personne
+inst1 : (∀ aEcrit: ¬ livre)  ⊓  (∃ aEdite: livre)
+inst2 : livre
+〈inst1,inst2〉 : aEcrit
+inst1 : personne
+〈michelAnge,david〉 : aCree
+〈michelAnge,sonnets〉 : aEcrit
+〈vinci,joconde〉 : aCree
+david : sculpture
+joconde : objet
+michelAnge : personne
+sonnets : livre
+vinci : personne
+
+
+To Abox2
+inst1 : ∀ aEcrit: ¬ livre
+inst1 : ∃ aEdite: livre
+inst1 : personne
+inst2 : livre
+〈inst1,inst2〉 : aEcrit
+inst1 : personne
+〈michelAnge,david〉 : aCree
+〈michelAnge,sonnets〉 : aEcrit
+〈vinci,joconde〉 : aCree
+david : sculpture
+joconde : objet
+michelAnge : personne
+sonnets : livre
+vinci : personne
+```
+
+
+
+
+
+
+
+```
+Some
+
+Evolution from Abox1
+inst1 : ∀ aEcrit: ¬ livre
+inst1 : ∃ aEdite: livre
+inst1 : personne
+inst2 : livre
+〈inst1,inst2〉 : aEcrit
+inst1 : personne
+〈michelAnge,david〉 : aCree
+〈michelAnge,sonnets〉 : aEcrit
+〈vinci,joconde〉 : aCree
+david : sculpture
+joconde : objet
+michelAnge : personne
+sonnets : livre
+vinci : personne
+
+
+To Abox2
+inst3 : livre
+〈inst1,inst3〉 : aEdite
+inst1 : ∀ aEcrit: ¬ livre
+inst1 : personne
+inst2 : livre
+〈inst1,inst2〉 : aEcrit
+inst1 : personne
+〈michelAnge,david〉 : aCree
+〈michelAnge,sonnets〉 : aEcrit
+〈vinci,joconde〉 : aCree
+david : sculpture
+joconde : objet
+michelAnge : personne
+sonnets : livre
+vinci : personne
+```
+
+
+
+
+
+```
+All
+
+Evolution from Abox1
+inst3 : livre
+〈inst1,inst3〉 : aEdite
+inst1 : ∀ aEcrit: ¬ livre
+inst1 : personne
+inst2 : livre
+〈inst1,inst2〉 : aEcrit
+inst1 : personne
+〈michelAnge,david〉 : aCree
+〈michelAnge,sonnets〉 : aEcrit
+〈vinci,joconde〉 : aCree
+david : sculpture
+joconde : objet
+michelAnge : personne
+sonnets : livre
+vinci : personne
+
+
+To Abox2
+inst2 : ¬ livre
+inst3 : livre
+〈inst1,inst3〉 : aEdite
+inst1 : personne
+inst2 : livre
+〈inst1,inst2〉 : aEcrit
+inst1 : personne
+〈michelAnge,david〉 : aCree
+〈michelAnge,sonnets〉 : aEcrit
+〈vinci,joconde〉 : aCree
+david : sculpture
+joconde : objet
+michelAnge : personne
+sonnets : livre
+vinci : personne
+```
+
+
+
+```
+collision between : inst2 : livre
+ and inst2 : ¬ livre
+
+
+collision between : inst2 : livre
+ and inst2 : ¬ livre
+
+
+Collision exist here!!
+
+Youpiiiiii, on a demontre la proposition initiale !!!
+true .
+```
+
+## Arbre construit selon l'affichage
+
+![demon1](./LRC/demon/demon1.png)
+
+## Test michelAnge: not(editeur)
+Il suffit de copier-coller les mots entre les étoiles .
+eg. pour `**[michelAnge, not(editeur)].**` on tape juste [michelAnge, not(editeur)].
+```
+Entrez   le   numero   du   type   de   proposition   que   vous   voulez demontrer :
+1 Une instance donnee appartient a un concept donne.
+2 Deux concepts n"ont pas d"elements en commun(ils ont une intersection vide).
+|: **1**.
+Entrer le concept et l"instance en [I,C].
+|: **[michelAnge, not(editeur)].**
+```
+```
+Abox ins = [(david,sculpture),(joconde,objet),(michelAnge,personne),(sonnets,livre),(vinci,personne),(michelAnge,and(personne,and(all(aEcrit,not(livre)),some(aEdite,livre))))]
+
+Abox relation = [(michelAnge,david,aCree),(michelAnge,sonnets,aEcrit),(vinci,joconde,aCree)]
+
+Abe = [(michelAnge,david,aCree),(michelAnge,sonnets,aEcrit),(vinci,joconde,aCree),(david,sculpture),(joconde,objet),(michelAnge,personne),(sonnets,livre),(vinci,personne),(michelAnge,and(personne,and(all(aEcrit,not(livre)),some(aEdite,livre))))]
+```
+```
+AND
+
+Evolution from Abox1
+〈michelAnge,david〉 : aCree
+〈michelAnge,sonnets〉 : aEcrit
+〈vinci,joconde〉 : aCree
+david : sculpture
+joconde : objet
+michelAnge : personne
+sonnets : livre
+vinci : personne
+michelAnge : (personne)  ⊓  ((∀ aEcrit: ¬ livre)  ⊓  (∃ aEdite: livre))
+
+
+To Abox2
+michelAnge : personne
+michelAnge : (∀ aEcrit: ¬ livre)  ⊓  (∃ aEdite: livre)
+〈michelAnge,david〉 : aCree
+〈michelAnge,sonnets〉 : aEcrit
+〈vinci,joconde〉 : aCree
+david : sculpture
+joconde : objet
+michelAnge : personne
+sonnets : livre
+vinci : personne
+```
+
+
+
+
+
+```
+AND
+
+Evolution from Abox1
+michelAnge : personne
+michelAnge : (∀ aEcrit: ¬ livre)  ⊓  (∃ aEdite: livre)
+〈michelAnge,david〉 : aCree
+〈michelAnge,sonnets〉 : aEcrit
+〈vinci,joconde〉 : aCree
+david : sculpture
+joconde : objet
+michelAnge : personne
+sonnets : livre
+vinci : personne
+
+
+To Abox2
+michelAnge : ∀ aEcrit: ¬ livre
+michelAnge : ∃ aEdite: livre
+michelAnge : personne
+〈michelAnge,david〉 : aCree
+〈michelAnge,sonnets〉 : aEcrit
+〈vinci,joconde〉 : aCree
+david : sculpture
+joconde : objet
+michelAnge : personne
+sonnets : livre
+vinci : personne
+```
+
+
+
+
+
+
+
+```
+Some
+
+Evolution from Abox1
+michelAnge : ∀ aEcrit: ¬ livre
+michelAnge : ∃ aEdite: livre
+michelAnge : personne
+〈michelAnge,david〉 : aCree
+〈michelAnge,sonnets〉 : aEcrit
+〈vinci,joconde〉 : aCree
+david : sculpture
+joconde : objet
+michelAnge : personne
+sonnets : livre
+vinci : personne
+
+
+To Abox2
+inst1 : livre
+〈michelAnge,inst1〉 : aEdite
+michelAnge : ∀ aEcrit: ¬ livre
+michelAnge : personne
+〈michelAnge,david〉 : aCree
+〈michelAnge,sonnets〉 : aEcrit
+〈vinci,joconde〉 : aCree
+david : sculpture
+joconde : objet
+michelAnge : personne
+sonnets : livre
+vinci : personne
+```
+
+
+
+
+
+```
+All
+
+Evolution from Abox1
+inst1 : livre
+〈michelAnge,inst1〉 : aEdite
+michelAnge : ∀ aEcrit: ¬ livre
+michelAnge : personne
+〈michelAnge,david〉 : aCree
+〈michelAnge,sonnets〉 : aEcrit
+〈vinci,joconde〉 : aCree
+david : sculpture
+joconde : objet
+michelAnge : personne
+sonnets : livre
+vinci : personne
+
+
+To Abox2
+sonnets : ¬ livre
+inst1 : livre
+〈michelAnge,inst1〉 : aEdite
+michelAnge : personne
+〈michelAnge,david〉 : aCree
+〈michelAnge,sonnets〉 : aEcrit
+〈vinci,joconde〉 : aCree
+david : sculpture
+joconde : objet
+michelAnge : personne
+sonnets : livre
+vinci : personne
+```
+
+
+
+```
+collision between : sonnets : livre
+ and sonnets : ¬ livre
+
+
+collision between : sonnets : livre
+ and sonnets : ¬ livre
+
+
+Collision exist here!!
+
+Youpiiiiii, on a demontre la proposition initiale !!!
+true .
+```
