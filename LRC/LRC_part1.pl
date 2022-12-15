@@ -2,10 +2,10 @@
 % On vérifie la grammaire de la logique ALC ,concept: ConceptGen -> boolean
 
 concept(not(C)) :- concept(C), !.
-concept(and(C1, C2)) :- concept(C1), concept(C2), !.
-concept(or(C1, C2)) :- concept(C1), concept(C2), !.
-concept(some(R, C)) :- role(R), concept(C), !.
-concept(all(R, C)) :- role(R), concept(C), !.
+concept(and(C1,C2)) :- concept(C1), concept(C2), !.
+concept(or(C1,C2)) :- concept(C1), concept(C2), !.
+concept(some(R,C)) :- role(R), concept(C), !.
+concept(all(R,C)) :- role(R), concept(C), !.
 
 concept(C) :- cnamea(C), !. % Vérification des concepts atomique
 concept(CG) :- cnamena(CG), !. % Vérification des concepts non atomique
@@ -40,8 +40,9 @@ test_autoref :-
 
 % Pour developper les ConceptGen
 % prolonge: ConceptGen -> composition de concepts atomiques
-prolonge(C,C):-cnamea(C),!.
+prolonge(C,C):-cnamea(C),!. %si c est atomique, on le laisse
 prolonge(C1,L):-cnamena(C1),equiv(C1,C2),concept(C2),prolonge(C2,L). % si c”est non-atomique, on le transforme en atomique
+% prolonge en fonction de la forme de concept
 prolonge(and(C1,C2),and(L1,L2)):-prolonge(C1,L1),prolonge(C2,L2),!.
 prolonge(or(C1,C2),or(L1,L2)):-prolonge(C1,L1),prolonge(C2,L2),!.
 prolonge(some(R,C),some(R,L)):-role(R),prolonge(C,L),!.

@@ -44,13 +44,15 @@ ajouter2(C1,C2,Abi,Abi1,Tbox):- genere(A),prolonge_A_Tbox(C1,Tbox,Abi,CC1),
                                 write(Abi1).
 
 
-% Pronlonger un concept base de Tbox et Tbox( presque la meme que dans LRC_part1.pl)
+% Prolonger un concept base de Tbox et Tbox( presque la meme que dans LRC_part1.pl)
 prolonge_A_Tbox(C,Tbox,Abox,C):- member((_,C),Abox),
                                 not(member((C,_),Tbox)). % si c”est atomique, on ne fait rien
-prolonge_A_Tbox(anything,_,_,anything):-!.
-prolonge_A_Tbox(nothing,_,_,nothing):-!.
+prolonge_A_Tbox(anything,_,_,anything):-!. % si c”est anything, on ne fait rien
+prolonge_A_Tbox(nothing,_,_,nothing):-!. % si c”est nothing, on ne fait rien
 prolonge_A_Tbox(C,Tbox,Abox,L):- not(member((_,C),Abox)),member((C,CC),Tbox),
                                 prolonge_A_Tbox(CC,Tbox,Abox,L). % si c”est non-atomique, on le transforme en atomique
+
+% prolonge en fonction de la forme de concept
 prolonge_A_Tbox(and(C,D),Tbox,Abox,and(L1,L2)):-prolonge_A_Tbox(C,Tbox,Abox,L1),
                                                 prolonge_A_Tbox(D,Tbox,Abox,L2),!.
 prolonge_A_Tbox(or(C,D),Tbox,Abox,or(L1,L2)):-prolonge_A_Tbox(C,Tbox,Abox,L1),
