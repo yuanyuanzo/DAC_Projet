@@ -181,6 +181,7 @@ resolution(_,_,_,_,_,Abe):- not(test_collision(Abe)),
 
 
 % print the evolution
+%imprimer un concept seul
 print_concepte(and(C1,C2)):- 
                            write('('),
                            print_concepte(C1),
@@ -207,13 +208,13 @@ print_concepte((I,C)):- write(I),write(' : '),print_concepte(C),nl,!.
 print_concepte(some(R,C)):- write('∃ '),write(R),write(': '),print_concepte(C).
 print_concepte(all(R,C)):- write('∀ '),write(R),write(': '),print_concepte(C).
 
-
+% imprimer un Abox
 print_Abox([]).
 print_Abox([A|Abe]):-
                     print_concepte(A),
                     print_Abox(Abe).
 
-
+% imprimer l evolution de un Abox a un autre
 affiche_evolution_Abox(_,_,_,_,_,Abe1,_,_,_,_,_,Abe2) :- 
                   write('Evolution from Abox1'),nl,
                     print_Abox(Abe1),
